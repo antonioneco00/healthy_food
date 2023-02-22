@@ -1,0 +1,52 @@
+version: '3.3'
+services:
+  backend:
+    container_name: prueba_tecnica_backend
+    build:
+      context: ./services/php/symfony6
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./../backend:/var/www/html
+    networks:
+      - prueba-tecnica-backend
+    command: >
+      "composer install 
+      && sh /usr/local/bin/start.sh"
+  mysql:
+    container_name: prueba_tecnica_mysql
+    image: mysql:8.0.30
+    env_file: ./.env
+    command:
+      - --max_allowed_packet=500M
+      - --sql-mode=
+      - --innodb-buffer-pool-size=5G
+      - --innodb-flush-log-at-trx-commit=0
+      - --innodb-log-file-size=2G
+      - --innodb_flush_method=O_DIRECT
+    volumes:
+      - prueba-tecnica-mysql:/var/lib/mysql
+      - ./sql:/root/
+    networks:
+      - prueba-tecnica-backend
+  phpmyadmin:
+    container_name: prueba_tecnica_phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    ports:
+    - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      UPLOAD_LIMIT: 400M
+    networks:
+      - prueba-tecnica-backend
+
+
+networks:
+  prueba-tecnica-backend:
+    driver: bridge
+
+
+volumes:  
+  prueba-tecnica-mysql:
+    driver: local
