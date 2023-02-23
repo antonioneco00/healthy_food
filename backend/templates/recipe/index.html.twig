@@ -5,5 +5,13 @@
 {% block body %}
 {% for recipe in recipes %}
     <h2>{{recipe.name}}</h2>
+    <img src={{recipe.photo}} alt="Imagen de la receta" width="300">
+    <h3>Descripcion:</h3>
+    <p>{{recipe.description}}</p>
+    <h3>Preparacion:</h3>
+    <p>{{recipe.preparation}}</p>
+    <a href="recipe/{{recipe.id}}" class="btn btn-success">Leer más</a>
 {% endfor %}
+<br>
+<a href="recipe/create" class="btn btn-success">Añadir receta</a>
 {% endblock %}
