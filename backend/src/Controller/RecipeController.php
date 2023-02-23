@@ -9,12 +9,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RecipeController extends AbstractController
 {
-    #[Route('/recipe', name: 'app_recipe')]
+    #[Route('/recipes', name: 'recipes')]
     public function index(RecipeRepository $recipeRepository): Response
     {
         $recipes = $recipeRepository->findAll();
         
-        dd($recipes);
+        // dd($recipes[0]);
         
         return $this->render('recipe/index.html.twig', [
             'recipes' => $recipes
