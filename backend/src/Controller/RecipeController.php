@@ -21,14 +21,24 @@ class RecipeController extends AbstractController
         $this->recipeRepository = $recipeRepository;
         $this->entityManager = $entityManager;
     }
-    
+
     #[Route('/recipes', name: 'recipes', methods: ['GET'])]
     public function index(): Response
     {
         $recipes = $this->recipeRepository->findAll();
-        
+
         return $this->render('recipe/index.html.twig', [
             'recipes' => $recipes
+        ]);
+    }
+
+    #[Route('/recipe/{id}', name: 'detail', methods: ['GET'])]
+    public function detail($id): Response
+    {
+        $recipe = $this->recipeRepository->find($id);
+
+        return $this->render('recipe/detail.html.twig', [
+            'recipe' => $recipe
         ]);
     }
 
@@ -48,19 +58,35 @@ class RecipeController extends AbstractController
 
             return $this->redirectToRoute('recipes');
         }
-        
+
         return $this->render('recipe/create.html.twig', [
             'form' => $form->createView()
         ]);
     }
-    
-    #[Route('/recipe/{id}', name: 'detail', methods: ['GET'])]
-    public function detail($id): Response
+
+    #[Route('/recipe/edit/{id}', name: 'edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, $id): Response
     {
         $recipe = $this->recipeRepository->find($id);
-        
-        return $this->render('recipe/detail.html.twig', [
-            'recipe' => $recipe
+        $form = $this->createForm(RecipeFormType::class, $recipe);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $recipe->setName($form->get('name')->getData());
+            $recipe->setPhoto($form->get('photo')->getData());
+            $recipe->setDescription($form->get('description')->getData());
+            $recipe->setPreparation($form->get('preparation')->getData());
+
+            $this->entityManager->persist($recipe);
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('recipes');
+        }
+
+        return $this->render('recipe/edit.html.twig', [
+            'recipe' => $recipe,
+            'form' => $form->createView()
         ]);
     }
 }
