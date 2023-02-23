@@ -94,7 +94,6 @@ class RecipeController extends AbstractController
     public function delete($id): Response
     {
         $recipe = $this->recipeRepository->find($id);
-        $form = $this->createForm(RecipeFormType::class, $recipe);
 
         $this->entityManager->remove($recipe);
         $this->entityManager->flush();
