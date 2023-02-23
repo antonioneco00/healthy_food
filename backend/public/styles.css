@@ -1,0 +1,8 @@
+#root {
+    background-image: url('/backend/public/pattern.svg');
+}
+
+#recipesContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}

@@ -3,17 +3,21 @@
 {% block title %}Todas las recetas{% endblock %}
 
 {% block body %}
-{% for recipe in recipes %}
-    <h2>{{recipe.name}}</h2>
-    <img src={{recipe.photo}} alt="Imagen de la receta" width="300">
-    <h3>Descripcion:</h3>
-    <p>{{recipe.description}}</p>
-    <h3>Preparacion:</h3>
-    <p>{{recipe.preparation}}</p>
-    <a href="recipe/{{recipe.id}}" class="btn btn-success">Leer más</a>
-    <a href="recipe/edit/{{recipe.id}}" class="btn btn-warning">Editar receta</a>
-    <a href="recipe/delete/{{recipe.id}}" class="btn btn-danger">Eliminar receta</a>
-{% endfor %}
+<div id="recipesContainer">
+    {% for recipe in recipes %}
+        <div class="card">
+            <h2>{{recipe.name}}</h2>
+            <img src={{recipe.photo}} alt="Imagen de la receta" width="300">
+            <h3>Descripcion:</h3>
+            <p>{{recipe.description}}</p>
+            <h3>Preparacion:</h3>
+            <p>{{recipe.preparation}}</p>
+            <a href="recipe/{{recipe.id}}" class="btn btn-success">Leer más</a>
+            <a href="recipe/edit/{{recipe.id}}" class="btn btn-warning">Editar receta</a>
+            <a href="recipe/delete/{{recipe.id}}" class="btn btn-danger">Eliminar receta</a>
+        </div>
+    {% endfor %}
+</div>
 <br>
-<a href="recipe/create" class="btn btn-success">Añadir receta</a>
+<a href="{{path('create')}}" class="btn btn-success">Añadir receta</a>
 {% endblock %}

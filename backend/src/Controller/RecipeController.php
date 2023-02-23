@@ -32,16 +32,6 @@ class RecipeController extends AbstractController
         ]);
     }
 
-    #[Route('/recipe/{id}', name: 'detail', methods: ['GET'])]
-    public function detail($id): Response
-    {
-        $recipe = $this->recipeRepository->find($id);
-
-        return $this->render('recipe/detail.html.twig', [
-            'recipe' => $recipe
-        ]);
-    }
-
     #[Route('/recipe/create', name: 'create', methods: ['GET', 'POST'])]
     public function create(Request $request): Response
     {
@@ -61,6 +51,16 @@ class RecipeController extends AbstractController
 
         return $this->render('recipe/create.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/recipe/{id}', name: 'detail', methods: ['GET'])]
+    public function detail($id): Response
+    {
+        $recipe = $this->recipeRepository->find($id);
+
+        return $this->render('recipe/detail.html.twig', [
+            'recipe' => $recipe
         ]);
     }
 
@@ -97,7 +97,7 @@ class RecipeController extends AbstractController
 
         $this->entityManager->remove($recipe);
         $this->entityManager->flush();
-        
+
         return $this->redirectToRoute('recipes');
     }
 }
