@@ -17,12 +17,15 @@
     </head>
     <body>
         <div class="container-md" id="root">
-            <div class="row">
+            <div class="row align-items-center bg-light" id="header">
                 <div class="col">
                     <h1 class="text-success">Healthy food</h1>
                 </div>
-                <div id="authLinks">
-                    <a href="/{{app.user ? 'logout' : 'login'}}">{{app.user ? 'Cerrar sesión' : 'Iniciar sesión'}}</a>
+                <div class="row col gap-2 justify-content-end" id="authLinks">
+                    <a href="/{{app.user ? 'logout' : 'login'}}" class="w-auto btn btn-outline-success">{{app.user ? 'Cerrar sesión' : 'Iniciar sesión'}}</a>
+                    {% if not app.user %}
+                        <a href="{{path('register')}}" class="w-auto btn btn-outline-success">Registrarse</a>
+                    {% endif %}
                 </div>
             </div>
             {% block body %}{% endblock %}
