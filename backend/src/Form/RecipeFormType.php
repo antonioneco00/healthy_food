@@ -16,22 +16,26 @@ class RecipeFormType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'attr' => [
-                    'placeholder' => 'Introduzca el nombre'
+                    'placeholder' => 'Introduzca el nombre',
+                    'class' => 'd-block w-50'
                 ]
             ])
             ->add('photo', TextType::class, [
                 'attr' => [
-                    'placeholder' => 'Introduzca la url a una imagen'
+                    'placeholder' => 'Introduzca la url a una imagen',
+                    'class' => 'd-block w-50'
                 ]
             ])
             ->add('description', TextareaType::class, [
                 'attr' => [
-                    'placeholder' => 'Añade una descripcion'
+                    'placeholder' => 'Añade una descripcion',
+                    'class' => 'd-block w-50'
                 ]
             ])
             ->add('preparation', TextareaType::class, [
                 'attr' => [
-                    'placeholder' => 'Indique su preparacion'
+                    'placeholder' => 'Indique su preparacion',
+                    'class' => 'd-block w-50'
                 ]
             ])
         ;

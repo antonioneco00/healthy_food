@@ -1,9 +1,11 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    {{form_start(form)}}
-    {{form_widget(form)}}
-    <input type="submit" value="Subir receta" class="btn btn-success">
-    {{form_end(form)}}
-    <a href="{{path('recipes')}}" class="btn btn-success">Volver</a>
+    <div class="bg-light p-2">
+        {{form_start(form)}}
+        {{form_widget(form, {'attr':{'class':'d-flex flex-column'}})}}
+        <input type="submit" value="Subir receta" class="btn btn-success">
+        <a href="{{path('recipes')}}" class="btn btn-success">Volver</a>
+        {{form_end(form)}}
+    </div>
 {% endblock %}
