@@ -4,19 +4,23 @@
 
 {% block body %}
 <div id="recipesContainer">
-    {% for recipe in recipes %}
-        <div class="card">
-            <h2>{{recipe.name}}</h2>
-            <img src={{recipe.photo}} alt="Imagen de la receta" width="300">
-            <h3>Descripcion:</h3>
-            <p>{{recipe.description}}</p>
-            <h3>Preparacion:</h3>
-            <p>{{recipe.preparation}}</p>
-            <a href="recipe/{{recipe.id}}" class="btn btn-success">Leer más</a>
-            <a href="recipe/edit/{{recipe.id}}" class="btn btn-warning">Editar receta</a>
-            <a href="recipe/delete/{{recipe.id}}" class="btn btn-danger">Eliminar receta</a>
-        </div>
-    {% endfor %}
+    {% if recipes %}
+        {% for recipe in recipes %}
+            <div class="card">
+                <h2>{{recipe.name}}</h2>
+                <img src={{recipe.photo}} alt="Imagen de la receta" width="300">
+                <h3>Descripcion:</h3>
+                <p>{{recipe.description}}</p>
+                <h3>Preparacion:</h3>
+                <p>{{recipe.preparation}}</p>
+                <a href="recipe/{{recipe.id}}" class="btn btn-success">Leer más</a>
+                <a href="recipe/edit/{{recipe.id}}" class="btn btn-warning">Editar receta</a>
+                <a href="recipe/delete/{{recipe.id}}" class="btn btn-danger">Eliminar receta</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h2>Aún no se han añadido recetas</h2>
+    {% endif %}
 </div>
 <br>
 <a href="{{path('create')}}" class="btn btn-success">Añadir receta</a>

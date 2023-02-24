@@ -21,6 +21,9 @@
                 <div class="col">
                     <h1 class="text-success">Healthy food</h1>
                 </div>
+                <div id="authLinks">
+                    <a href="/{{app.user ? 'logout' : 'login'}}">{{app.user ? 'Cerrar sesión' : 'Iniciar sesión'}}</a>
+                </div>
             </div>
             {% block body %}{% endblock %}
         </div>
