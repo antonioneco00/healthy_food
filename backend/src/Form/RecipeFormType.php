@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Recipe;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -20,11 +21,12 @@ class RecipeFormType extends AbstractType
                     'class' => 'd-block w-50'
                 ]
             ])
-            ->add('photo', TextType::class, [
+            ->add('photo', FileType::class, [
                 'attr' => [
-                    'placeholder' => 'Introduzca la url a una imagen',
-                    'class' => 'd-block w-50'
-                ]
+                    'class' => 'd-block'
+                ],
+                'required' => false,
+                'mapped' => false
             ])
             ->add('description', TextareaType::class, [
                 'attr' => [

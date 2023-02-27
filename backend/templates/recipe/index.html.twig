@@ -6,16 +6,18 @@
 <div id="recipesContainer">
     {% if recipes %}
         {% for recipe in recipes %}
-            <div class="card">
-                <h2>{{recipe.name}}</h2>
-                <img src={{recipe.photo}} alt="Imagen de la receta" width="300">
-                <h3>Descripcion:</h3>
-                <p>{{recipe.description}}</p>
-                <h3>Preparacion:</h3>
-                <p>{{recipe.preparation}}</p>
-                <a href="recipe/{{recipe.id}}" class="btn btn-success">Leer más</a>
-                <a href="recipe/edit/{{recipe.id}}" class="btn btn-warning">Editar receta</a>
-                <a href="recipe/delete/{{recipe.id}}" class="btn btn-danger">Eliminar receta</a>
+            <div class="card" id="recipeContent">
+                <h2 class="card-header bg-success text-light text-center">{{recipe.name}}</h2>
+                <div class="d-flex justify-content-center align-items-center h-50" id="photoContainer"><img src={{recipe.photo}} alt="Imagen de la receta" width="300" class="shadow-3d"></div>
+                <h3 class="bg-success text-light rounded-pill w-50 px-4 my-2 m-auto shadow-3d">Descripcion</h3>
+                <p class="mx-2">{{recipe.description}}</p>
+                <h3 class="bg-success text-light rounded-pill w-50 px-4 my-2 m-auto shadow-3d">Preparacion</h3>
+                <p class="mx-2">{{recipe.preparation}}</p>
+                <div class="d-flex flex-column align-items-center">
+                    <a href="recipe/{{recipe.id}}" class="w-75 btn btn-success my-1 rounded-pill border border-dark">Leer más</a>
+                    <a href="recipe/edit/{{recipe.id}}" class="w-75 btn btn-warning my-1 rounded-pill border border-dark">Editar receta</a>
+                    <a href="recipe/delete/{{recipe.id}}" class="w-75 btn btn-danger my-1 rounded-pill border border-dark">Eliminar receta</a>
+                </div>
             </div>
         {% endfor %}
     {% else %}

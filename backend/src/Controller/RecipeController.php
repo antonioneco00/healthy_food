@@ -7,6 +7,7 @@ use App\Form\RecipeFormType;
 use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,6 +44,23 @@ class RecipeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $recipeData = $form->getData();
 
+            $photo = $form->get('photo')->getData();
+
+            if ($photo) {
+                $fileName = uniqid() . '.' . $photo->guessExtension();
+
+                try {
+                    $photo->move(
+                        $this->getParameter('kernel.project_dir') . '/public/uploads',
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                    return new Response($e->getMessage());
+                }
+
+                $recipe->setPhoto('/uploads/' . $fileName);
+            }
+
             $this->entityManager->persist($recipeData);
             $this->entityManager->flush();
 
@@ -71,15 +89,43 @@ class RecipeController extends AbstractController
         $form = $this->createForm(RecipeFormType::class, $recipe);
 
         $form->handleRequest($request);
+        $photo = $form->get('photo')->getData();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $recipe->setName($form->get('name')->getData());
-            $recipe->setPhoto($form->get('photo')->getData());
-            $recipe->setDescription($form->get('description')->getData());
-            $recipe->setPreparation($form->get('preparation')->getData());
+            if ($photo) {
+                if ($recipe->getPhoto() !== null) {
+                    if (file_exists(
+                        $this->getParameter('kernel.project_dir') . $recipe->getPhoto()
+                    )) {
+                        $this->getParameter('kernel.project_dir') . $recipe->getPhoto();
 
-            $this->entityManager->persist($recipe);
-            $this->entityManager->flush();
+                        $fileName = uniqid() . '.' . $photo->guessExtension();
+
+                        try {
+                            $photo->move(
+                                $this->getParameter('kernel.project_dir') . '/public/uploads',
+                                $fileName
+                            );
+                        } catch (FileException $e) {
+                            return new Response($e->getMessage());
+                        }
+
+
+                        $recipe->setPhoto('/uploads/' . $fileName);
+
+                        $this->entityManager->flush();
+
+                        return $this->redirectToRoute('recipes');
+                    }
+                }
+            } else {
+                $recipe->setName($form->get('name')->getData());
+                $recipe->setDescription($form->get('description')->getData());
+                $recipe->setPreparation($form->get('preparation')->getData());
+                
+                // $this->entityManager->persist($recipe);
+                $this->entityManager->flush();
+            }
 
             return $this->redirectToRoute('recipes');
         }

@@ -1,0 +1,30 @@
+body {
+  background-image: url("../images/pattern.svg");
+}
+
+#title {
+  transition: all 300ms;
+}
+
+#title:hover {
+  text-shadow: 0 0 5px #198754;
+}
+
+#recipesContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+}
+
+#recipeContent {
+  transition: all 300ms;
+}
+
+#recipeContent:hover {
+  box-shadow: 2px 2px 0 #1987547b, 4px 4px 0 #1987547b, 6px 6px 0 #1987547b;
+}
+
+.shadow-3d {
+  box-shadow: 2px 2px 2px #222, 0px 0px 4px #222 inset, -1px 0px 2px #222 inset,
+    1px 3px 2px #222;
+}
